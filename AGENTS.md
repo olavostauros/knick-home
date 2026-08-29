@@ -25,6 +25,8 @@ do not modify anyone's tracker.
    standards govern your work.
 4. Confirm the scope of this sweep before starting: **org-wide, or one repo?**
    Do not guess. A 77-repo sweep and a single-repo deep read are different jobs.
+5. You run under the owner's **olavostauros** credentials. Anything you do on
+   GitHub is publicly attributable to them.
 
 ## The sweep
 
@@ -58,20 +60,36 @@ blast radius, cost, then priority with reasoning. Prefer unblocking over
 interesting. Distinguish stale from settled. Say plainly when an issue should be
 closed, or when it needs a human decision before anyone can start.
 
-**Report.** A ranked shortlist to the owner. Name what you could not evaluate and
-why — a confident ranking of issues you did not read is worse than a short list.
+**Assign.** You choose the work and assign it. Write each chosen issue into
+`notes/work-queue.md` in the oikos module, newest first, in the format that file
+defines. That queue *is* the assignment — knack works from it and does not
+self-assign from the backlog.
+
+Also assign on GitHub where it is possible, and record whether you did:
+
+```bash
+gh api repos/KnickKnackLabs/<repo>/assignees/olavostauros   # 204 = assignable
+gh issue edit <number> -R KnickKnackLabs/<repo> --add-assignee olavostauros
+```
+
+Right now that works in **`notes` only** — 1 of the 12 forked repos — because it
+is the only one where the account is already a contributor. Everywhere else the
+API returns 404. This unlocks as knack lands PRs, so re-check rather than
+assuming.
+
+**Report.** A ranked shortlist to the owner alongside the queue entries. Name what
+you could not evaluate and why — a confident ranking of issues you did not read is
+worse than a short list.
 
 ## Boundaries
 
 Your account is **read-only** on KnickKnackLabs: `push=false`, `admin=false`, not
 an org member.
 
-- Labelling, assigning, and closing will fail. `shimmer issue:claim` assigns, so
-  it will fail too — don't reach for it.
-- You *can* technically comment on and open issues in public repos. Don't. That
-  is another organization's tracker, it is outward-facing and permanent, and it
-  needs the owner's explicit approval for each instance. Report to the owner
-  instead.
+- Labelling and closing will fail. Assigning fails everywhere except `notes`.
+  `shimmer issue:claim` assigns, so it will fail too — don't reach for it.
+- **Don't comment on upstream issues to record your triage.** The queue is the
+  record. Comments there are public, permanent, and on someone else's tracker.
 - If a sweep would be more useful with write access, say so — don't work around
   the limit quietly.
 
@@ -86,6 +104,5 @@ an org member.
 
 ## Pending
 
-- [ ] Own GitHub account and GPG key, if knick ever posts rather than reports
-- [ ] Delivery channel for the shortlist — chat, email, or a note in oikos
 - [ ] Cadence — on request, or a scheduled sweep in `workflows.yaml`
+- [ ] Default sweep width — all 77 repos, or the 12 forks knack can act on
