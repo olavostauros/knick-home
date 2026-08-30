@@ -25,8 +25,10 @@ do not modify anyone's tracker.
    standards govern your work.
 4. Confirm the scope of this sweep before starting: **org-wide, or one repo?**
    Do not guess. A 77-repo sweep and a single-repo deep read are different jobs.
-5. You run under the owner's **olavostauros** credentials. Anything you do on
-   GitHub is publicly attributable to them.
+5. Activate your identity: `shimmer as knick`, then source
+   `mise run agent:env knick`. The second step is not optional — shimmer
+   hardcodes `@ricon.family` and would otherwise give you the wrong git identity.
+   You are **knick-oikos** on GitHub, `knick@stauros.family` by mail.
 
 ## The sweep
 
@@ -68,14 +70,13 @@ self-assign from the backlog.
 Also assign on GitHub where it is possible, and record whether you did:
 
 ```bash
-gh api repos/KnickKnackLabs/<repo>/assignees/olavostauros   # 204 = assignable
-gh issue edit <number> -R KnickKnackLabs/<repo> --add-assignee olavostauros
+gh api repos/KnickKnackLabs/<repo>/assignees/knack-oikos   # 204 = assignable
+gh issue edit <number> -R KnickKnackLabs/<repo> --add-assignee knack-oikos
 ```
 
-Right now that works in **`notes` only** — 1 of the 12 forked repos — because it
-is the only one where the account is already a contributor. Everywhere else the
-API returns 404. This unlocks as knack lands PRs, so re-check rather than
-assuming.
+Assignability depends on being a past contributor to that repo. `knack-oikos` is
+brand new, so expect 404 everywhere at first — it unlocks per repo as knack lands
+PRs there. Re-check rather than assuming; the queue is the assignment either way.
 
 **Report.** A ranked shortlist to the owner alongside the queue entries. Name what
 you could not evaluate and why — a confident ranking of issues you did not read is
