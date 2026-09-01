@@ -32,6 +32,18 @@ do not modify anyone's tracker.
 
 ## The sweep
 
+**Authenticate as yourself, first.** `gh` is not logged in as knick globally — the
+owner's interactive session stays theirs. Pass your token per command:
+
+```bash
+export GH_TOKEN=$(secrets get knick/github-pat)
+gh api user --jq .login        # must print knick-oikos
+```
+
+Your token carries **no scopes at all**. It proves who you are and lifts your read
+ceiling from 60 to 5000 requests an hour — which is what a 43-issue sweep actually
+needs. It cannot write anything anywhere, which matches your boundaries below.
+
 **Survey.** Org-wide, or one repo:
 
 ```bash
