@@ -40,9 +40,18 @@ export GH_TOKEN=$(secrets get knick/github-pat)
 gh api user --jq .login        # must print knick-oikos
 ```
 
-Your token carries **no scopes at all**. It proves who you are and lifts your read
-ceiling from 60 to 5000 requests an hour — which is what a 43-issue sweep actually
-needs. It cannot write anything anywhere, which matches your boundaries below.
+Your token carries **`public_repo`** (measured 2026-09-01; it previously carried
+no scopes, and this file said so until then). It proves who you are and lifts your
+read ceiling from 60 to 5000 requests an hour — which is what a 43-issue sweep
+actually needs.
+
+**Do not read that scope as permission.** `public_repo` can write to public
+repositories, so the boundaries below are held by *you*, not enforced by GitHub.
+Assume nothing is stopping you but the contract. Two consequences worth naming:
+`gh`'s "needs the `repo` scope" message is boilerplate emitted on any 404 and is
+not a scope report — probe existence with `gh api users/<login>/repos` instead;
+and `public_repo` is what makes your own fork creation possible under the
+2026-09-01 grant, so the capability is present and only the rules bound it.
 
 **Survey.** Org-wide, or one repo:
 
@@ -96,10 +105,39 @@ worse than a short list.
 
 ## Boundaries
 
+**Git authority lives in one place.** `~/oikos/AGENTS.md` is the single source
+for what you may do without asking and what always needs the owner. Read it
+there rather than trusting a copy — this file carried none of the owner's
+widenings for days, and an agent reading it could not tell that the rules had
+been loosened.
+
+As of 2026-09-01 there are three, each dated in that file: routine commits and
+pushes in `~/oikos` and your own home repo (2026-08-31); merging your own topic
+branches into `main` in those two repos (2026-09-01); and forking a public
+KnickKnackLabs repository to your own account plus making your **own** commit
+signing persist outside an activated shell (2026-09-01). Every destructive verb
+still needs the owner every time — force pushes and rewrites, branch deletion,
+renaming/transferring/deleting a repository including your own fork, pushes to
+any default branch outside those two repos, anything touching secrets,
+credentials, tokens or another agent's signing configuration, any `git add
+notes/<readable-name>` that bypasses `notes commit`, any change to the
+permission tiers in [[household-backlog]], and contacting a human.
+
+That list is a summary and may be incomplete; the file is the authority.
+
+You may narrow this at any time. Narrowing is yours; widening is the owner's.
+
 Your account is **read-only** on KnickKnackLabs: `push=false`, `admin=false`, not
 an org member.
 
-- Labelling and closing will fail. Assigning fails everywhere except `notes`.
+- Labelling and closing will fail. **Assignment has never once worked for
+  you.** Measured 2026-09-01 on `notes`, `shiv` and `codebase`: neither
+  `knick-oikos` nor `knack-oikos` is assignable on any of them; only the
+  owner's own `olavostauros` is, and only on `notes`. `knack-oikos` was checked
+  across 12 repos on 2026-08-29 with the same result. That is 3 of 77 repos for
+  your own account, so say "every repo checked", not "every repo" — and re-check
+  rather than assuming, since a merged PR unlocks assignment in that repo. The
+  queue is the assignment mechanism, and that is the point.
   `shimmer issue:claim` assigns, so it will fail too — don't reach for it.
 - **Don't comment on upstream issues to record your triage.** The queue is the
   record. Comments there are public, permanent, and on someone else's tracker.
