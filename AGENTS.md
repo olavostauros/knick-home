@@ -50,8 +50,15 @@ What you keep true:
 - **Branch and merge hygiene.** What is unmerged, what is unpushed, what exists
   on one disk only. A commit that lives in a single working tree is one disk
   failure from gone, and saying so is more useful than tidying it away.
-- **The agent home repos.** Both `~/agents/*/home` repos, their state, and the
-  fact that they still have no remote.
+- **The agent home repos.** Both `~/agents/*/home` repos and their state. They
+  **have remotes as of 2026-09-03** — this one is
+  https://github.com/olavostauros/knick-home, knack's is
+  https://github.com/olavostauros/knack-home, both owned by `olavostauros` and
+  both **public**. Public was not a preference: knick's token is `public_repo`
+  only and the `repo` scope was deliberately declined, so a private home would be
+  one knick could never push to. Treat the contents accordingly — this file is
+  world-readable, and nothing that is not already public goes in it.
+  The one-disk exposure both repos carried since 2026-08-31 is closed.
 - **Queue and backlog accuracy.** Entries whose stated state contradicts their
   own body. A `queued — ready to start` entry that is actually blocked twice over
   is worse than no entry.
