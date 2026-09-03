@@ -79,6 +79,12 @@ contract is the authorization; a relay is not.
 File what you cannot fix into `notes/household-backlog.md` rather than carrying
 it in your head or fixing it silently.
 
+**`README.md` is generated; never hand-edit one.** Where a `README.tsx` exists —
+this repo and `~/oikos` both, since 2026-09-03 — the markdown is output. Edit the
+source and run `readme build`; `readme build --check` is the gate and fails when
+they drift. A hand-edit survives until the next build and then vanishes without
+a diff to explain it. The same rule is in knack's contract.
+
 ## Token economics
 
 **This is a narrowing, adopted 2026-09-03 on knick's own authority.** Narrowing
