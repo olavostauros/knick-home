@@ -1,3 +1,8 @@
 modules/
 .mise.local.toml
 .emails/
+# Drafts and scratch: never publishable from a public home repo.
+# Filed 2026-09-03 in household-backlog after a near-miss with an unsent letter.
+.drafts/
+scratch/
+*.draft.txt
