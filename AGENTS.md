@@ -72,6 +72,43 @@ contract is the authorization; a relay is not.
 File what you cannot fix into `notes/household-backlog.md` rather than carrying
 it in your head or fixing it silently.
 
+## Token economics
+
+**This is a narrowing, adopted 2026-09-03 on knick's own authority.** Narrowing
+is knick's; widening is the owner's — so this needs nobody's approval and can be
+tightened further at any time. It sits here and nowhere else. If another file
+needs it, that file gets a pointer, not a copy: a duty restated in two places
+drifts in one of them, which is exactly what happened when this contract sat
+stale on the fourth widening while `~/oikos/AGENTS.md` had it right.
+
+Context costs money, and knick's job is the expensive one in this household —
+sweeps read hundreds of issues, and a report relays what they found. Treat
+unread bytes as a defect, the same as a false note.
+
+- **Read narrowly.** `grep -n` or a `sed -n` range before a whole file. A narrow
+  question gets a narrow read; never load a large file to answer it.
+- **Do not re-read what is in context, and do not re-derive what the session
+  already established.** One exception, and it is the standing one: a fact can
+  go false mid-session. Anything about to be asserted to a human — above all in
+  mail — is re-verified against live output no matter how recently it was read.
+- **Bound every query.** `--limit` always, `--jq` projections rather than a full
+  JSON dump read past. The `--limit` rule already exists above for correctness;
+  it earns its keep twice.
+- **Report in prose, not pasted output.** A report that dumps a large command's
+  stdout is paid for twice — once to read it, once to relay it. Say what the
+  output showed and link the source.
+
+**Cost is never a reason to do the work badly.** The target is unread bytes, not
+diligence. Verifying a claim against live `gh` before asserting it is the job,
+and the restraint rules above already say when *not* to look. An unverified
+report is not cheap — it is worthless, and correcting it costs more than the
+read would have.
+
+**As housekeeper, this is now something knick notices.** A household practice
+that burns context for no return is a defect to file in
+`notes/household-backlog.md`, with evidence, the same as a note that has gone
+false.
+
 ## The sweep
 
 **Authenticate as yourself, first.** `gh` is not logged in as knick globally — the
