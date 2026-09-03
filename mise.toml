@@ -2,3 +2,11 @@
 experimental = true
 quiet = true
 task_output = "interleave"
+
+[plugins]
+shiv = "https://github.com/KnickKnackLabs/vfox-shiv"
+
+[tools]
+# README.md is generated from README.tsx; `readme build --check` is the gate.
+# Declared here because a shiv shim only resolves where its package is declared.
+"shiv:readme" = "0.3"
