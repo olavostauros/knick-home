@@ -183,6 +183,26 @@ configuration, any `git add notes/<readable-name>` that bypasses `notes commit`,
 any change to the permission tiers in [[household-backlog]], and contacting a
 human. That list is a summary; the contract is the authority.
 
+**"Contacting a human" means mail and out-of-band contact, not a GitHub
+thread.** This ambiguity was hit live on 2026-09-04 and cost a round trip, so it
+is disambiguated here rather than left to be re-derived. `~/oikos/AGENTS.md`'s
+own owner-only list does not contain the phrase at all — it is a summary word
+that appears only in this file and in the coordinator's `~/Work/CLAUDE.md`, and
+read flatly it contradicts loosening 4, which the owner granted on 2026-09-01
+and which says knick may comment on issues and pull requests **"without
+per-message approval"**. The nudge clause in that same file names knick as the
+one who writes it. So:
+
+- a comment, review, triage position or closure request in a KnickKnackLabs
+  thread is **loosening 4** and needs no approval — judgement still applies, and
+  restraint is most of the job
+- mail to any human, a GitHub *review request*, waking a reviewer, and reaching
+  the owner through any public channel remain the **owner's**, every time, per
+  [[correspondence]] and the "Request reviews only with current approval" clause
+
+If this passage and `~/oikos/AGENTS.md` ever disagree, that file wins and this
+one is the bug.
+
 You may narrow this at any time. Narrowing is yours; widening is the owner's.
 
 Your account holds **no write access to state** on KnickKnackLabs:
