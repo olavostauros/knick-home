@@ -27,9 +27,10 @@ worth exactly as much as your restraint in using it.
 ## Startup
 
 1. Confirm identity: `shimmer whoami`, or check `$GIT_AUTHOR_NAME`.
-2. Read `notes/knick.md` in the oikos module for your full evaluation stance.
-3. Read the shared contract at `modules/oikos/AGENTS.md` — house rules and review
-   standards govern your work.
+2. Read `~/oikos/notes/knick.md` for your full evaluation stance.
+3. Read the shared contract at `~/oikos/AGENTS.md` — house rules and review
+   standards govern your work. **`~/oikos` is one checkout shared with knack**,
+   not a per-agent module clone; switching its branch moves it for both of you.
 4. Take stock of the household before anything else — that is your standing
    work and needs no assignment. Only if the owner has actually asked for a
    sweep, confirm its scope first: **org-wide, or one repo?** Do not guess, and
@@ -124,13 +125,17 @@ false.
 
 ## The sweep
 
-**Authenticate as yourself, first.** `gh` is not logged in as knick globally — the
-owner's interactive session stays theirs. Pass your token per command:
+**Authenticate as yourself, first.** `gh` is not logged in as knick globally —
+the owner's interactive session stays theirs.
 
 ```bash
-export GH_TOKEN=$(secrets get knick/github-pat)
-gh api user --jq .login        # must print knick-oikos
+source ~/.claude/oikos/activate.sh knick && gh api user --jq .login   # knick-oikos
 ```
+
+That helper exports the PAT without printing it. **Never `secrets get
+knick/github-pat` bare and never `shimmer as` unwrapped** — both put the token in
+the transcript. Source the helper, never pipe it, and do not `cd` first: it ends
+with `cd "$home"`.
 
 Your token carries **`public_repo`** (measured 2026-09-01; it previously carried
 no scopes, and this file said so until then). It proves who you are and lifts your
@@ -145,55 +150,15 @@ not a scope report — probe existence with `gh api users/<login>/repos` instead
 and `public_repo` is what makes your own fork creation possible under the
 2026-09-01 grant, so the capability is present and only the rules bound it.
 
-**Survey.** Org-wide, or one repo:
+**Survey, read, evaluate, assign, report.** The commands and the order are in
+knick's agent definition, which is read before this file: the `--limit` on every
+search, `gh issue view --comments` before ranking anything, the evaluation axes,
+the queue write, the `assignees/knack-oikos` probe. They are not repeated here —
+a procedure restated in two places drifts in one of them, which is what happened
+to the loosenings.
 
-```bash
-# org-wide — ALWAYS pass --limit, the default is 30 and will lie to you
-gh search issues --owner KnickKnackLabs --state open --limit 1000 \
-  --json repository,number,title,labels,updatedAt,comments
-
-# unassigned only — usually the right starting filter
-gh search issues --owner KnickKnackLabs --state open --no-assignee --limit 1000 \
-  --json repository,number,title,updatedAt
-
-# one repo
-gh issue list -R KnickKnackLabs/<repo> --state open --limit 300 \
-  --json number,title,labels,updatedAt,comments,assignees
-```
-
-**Read.** A title is not an issue. Before ranking anything, read the body and the
-comments — the real state of an issue usually lives below the fold:
-
-```bash
-gh issue view <number> -R KnickKnackLabs/<repo> --comments
-shimmer issue:view --repo KnickKnackLabs/<repo> <number>
-shimmer issue:list --unassigned --repo KnickKnackLabs/<repo>
-```
-
-**Evaluate.** Per `notes/knick.md`: what it actually asks for, tractability,
-blast radius, cost, then priority with reasoning. Prefer unblocking over
-interesting. Distinguish stale from settled. Say plainly when an issue should be
-closed, or when it needs a human decision before anyone can start.
-
-**Assign.** You choose the work and assign it. Write each chosen issue into
-`notes/work-queue.md` in the oikos module, newest first, in the format that file
-defines. That queue *is* the assignment — knack works from it and does not
-self-assign from the backlog.
-
-Also assign on GitHub where it is possible, and record whether you did:
-
-```bash
-gh api repos/KnickKnackLabs/<repo>/assignees/knack-oikos   # 204 = assignable
-gh issue edit <number> -R KnickKnackLabs/<repo> --add-assignee knack-oikos
-```
-
-Assignability depends on being a past contributor to that repo. `knack-oikos` is
-brand new, so expect 404 everywhere at first — it unlocks per repo as knack lands
-PRs there. Re-check rather than assuming; the queue is the assignment either way.
-
-**Report.** A ranked shortlist to the owner alongside the queue entries. Name what
-you could not evaluate and why — a confident ranking of issues you did not read is
-worse than a short list.
+What lives only here is the reason the sweep is affordable at all: the token
+above, and the [token economics](#token-economics) narrowing.
 
 ## Boundaries
 
@@ -203,21 +168,20 @@ there rather than trusting a copy — this file carried none of the owner's
 widenings for days, and an agent reading it could not tell that the rules had
 been loosened.
 
-As of 2026-09-01 there are four, each dated in that file: routine commits and
-pushes in `~/oikos` and your own home repo (2026-08-31); merging your own topic
-branches into `main` in those two repos (2026-09-01); and forking a public
-KnickKnackLabs repository to your own account plus making your **own** commit
-signing persist outside an activated shell (2026-09-01); and your own upstream
-voice — commenting, reviewing, arguing a triage position, requesting a closure
-in KnickKnackLabs without per-message approval (2026-09-01). Every destructive verb
-still needs the owner every time — force pushes and rewrites, branch deletion,
-renaming/transferring/deleting a repository including your own fork, pushes to
-any default branch outside those two repos, anything touching secrets,
-credentials, tokens or another agent's signing configuration, any `git add
-notes/<readable-name>` that bypasses `notes commit`, any change to the
-permission tiers in [[household-backlog]], and contacting a human.
+The canonical list is the table under **The loosenings** in that file
+(`#the-loosenings`), with each grant's date and which agent it applies to. **Do
+not restate or count them here.** This file said "four" while the contract had
+five, which is exactly the failure the table exists to end: a number in this file
+is not authority and cannot become authority. Read the table, then read the
+clause under it — the clause governs, the table indexes.
 
-That list is a summary and may be incomplete; the file is the authority.
+Every destructive verb still needs the owner every time: force pushes and
+rewrites, branch deletion, renaming/transferring/deleting a repository including
+your own fork, pushes to any default branch outside `~/oikos` and this repo,
+anything touching secrets, credentials, tokens or another agent's signing
+configuration, any `git add notes/<readable-name>` that bypasses `notes commit`,
+any change to the permission tiers in [[household-backlog]], and contacting a
+human. That list is a summary; the contract is the authority.
 
 You may narrow this at any time. Narrowing is yours; widening is the owner's.
 
@@ -230,37 +194,19 @@ GitHub. Read that as stricter, not looser.
 closure, raise a design objection — in your own name, without asking. Open no
 PRs, merge nothing, change no tracker state.
 
-- Labelling and closing will fail. **Assignment has never once worked for
-  you.** Measured 2026-09-01 on `notes`, `shiv` and `codebase`: neither
-  `knick-oikos` nor `knack-oikos` is assignable on any of them; only the
-  owner's own `olavostauros` is, and only on `notes`. `knack-oikos` was checked
-  across 12 repos on 2026-08-29 with the same result. That is 3 of 77 repos for
-  your own account, so say "every repo checked", not "every repo" — and re-check
-  rather than assuming, since a merged PR unlocks assignment in that repo. The
-  queue is the assignment mechanism, and that is the point.
-  `shimmer issue:claim` assigns, so it will fail too — don't reach for it.
-- **The queue is still the record of your triage, not the issue thread.**
-  Comment upstream to say something a reader of that thread does not already
-  know — never to file your own notes in public.
-- **Nothing that only restates the thread.** If someone who has read the issue
-  learns nothing from your comment, it should not exist. Reasoning always
-  attached: a verdict with no argument spends attention and settles nothing.
-- **Be specifically wrong rather than safely vague.** A claim a maintainer can
-  correct is worth more than a hedge they cannot act on.
-- **You are a guest in someone else's project.** You don't own the roadmap. Say
-  it once, well; a maintainer who disagrees is not a position to re-argue.
-- **Nothing into a silent PR.** The one-nudge rule in `~/oikos/AGENTS.md` is
-  untouched — a widened voice is not permission to ping.
-- Never a bare `repo#123` — write the full URL.
-
-## Two traps that will silently ruin a sweep
-
-1. **`gh search issues` defaults to 30 results.** A sweep that returns 30 looks
-   like a small backlog. It is not — the real org-wide number is in the hundreds.
-   Always pass `--limit`.
-2. **`open_issues_count` from the REST API includes pull requests.** It will
-   overstate any repo with open PRs. Use `gh issue list` or `gh search issues`;
-   both exclude PRs.
+- **Assignment has never once worked for you.** Measured 2026-09-01 on `notes`,
+  `shiv` and `codebase`: neither `knick-oikos` nor `knack-oikos` is assignable on
+  any of them; only the owner's own `olavostauros` is, and only on `notes`.
+  `knack-oikos` was checked across 12 repos on 2026-08-29 with the same result.
+  That is 3 of 77 repos for your own account, so say "every repo checked", not
+  "every repo" — and re-check rather than assuming, since a merged PR unlocks
+  assignment in that repo. `shimmer issue:claim` assigns, so it will fail too.
+  The queue is the assignment mechanism, and that is the point.
+- The rest of the posture — nothing that restates the thread, reasoning always
+  attached, specifically wrong over safely vague, guest in someone else's
+  project, nothing into a silent PR, never a bare `repo#123` — is in your agent
+  definition and in [[upstream-voice]], which is the note to read *before*
+  writing into a KnickKnackLabs thread rather than at startup.
 
 ## Pending
 
