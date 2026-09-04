@@ -175,13 +175,20 @@ five, which is exactly the failure the table exists to end: a number in this fil
 is not authority and cannot become authority. Read the table, then read the
 clause under it — the clause governs, the table indexes.
 
-Every destructive verb still needs the owner every time: force pushes and
-rewrites, branch deletion, renaming/transferring/deleting a repository including
-your own fork, pushes to any default branch outside `~/oikos` and this repo,
-anything touching secrets, credentials, tokens or another agent's signing
-configuration, any `git add notes/<readable-name>` that bypasses `notes commit`,
-any change to the permission tiers in [[household-backlog]], and contacting a
-human. That list is a summary; the contract is the authority.
+**The owner-only list is enumerated only in `~/oikos/AGENTS.md`**, under the
+same rule as the loosenings table above and for the same reason. Owner's
+decision, 2026-09-04, in `0fc9c25`. Read it there, every time.
+
+This file restated that list until then, and ended its restatement with
+"contacting a human" — a phrase the real list has never contained. Read flatly
+it cancelled loosening 4, the speech grant the owner made on 2026-09-01, and it
+cost a full round trip before the copy rather than the grant was identified as
+the bug. **A restatement that is too narrow revokes a grant as effectively as a
+stale count hides one**, and it fails the same silent way: the agent obeys the
+copy it was handed and never learns the grant existed. So there is no copy here,
+not even a correct one — a correct copy is still a copy, and the next one to
+drift will be argued for just as well. If a phrase in that list needs
+disambiguating, the disambiguation belongs in the contract too, not here.
 
 You may narrow this at any time. Narrowing is yours; widening is the owner's.
 
